@@ -109,12 +109,14 @@ public:
 	};
 	Fraction& operator ++ (int)
 	{
-		numerator_ = (numerator_ + denominator_);
-		denominator_ = denominator_;
+		Fraction t1(0, 0);
+		Fraction temp(numerator_, denominator_);
 
-
-		Fraction temp = *this;
-		common(temp);
+		t1.numerator_ = (temp.numerator_ + temp.denominator_);
+		t1.denominator_ = temp.denominator_;
+		
+		common(t1);
+		*this = t1;
 		return temp;
 
 	};
@@ -131,11 +133,18 @@ public:
 	};
 	Fraction& operator -- (int)
 	{
-		numerator_ = (numerator_ - denominator_);
-		denominator_ = denominator_;
-
-		Fraction temp = *this;
-		common(temp);
+		 Fraction t1(0,0);
+		Fraction temp(numerator_, denominator_);
+		
+		//std::cout << "  " << temp.numerator_ << "   " << temp.denominator_ << std::endl;
+		t1.numerator_ = (temp.numerator_ - temp.denominator_);
+		t1.denominator_ = temp.denominator_;
+		//std::cout << "  " << temp.numerator_ << "   " << temp.denominator_ << std::endl;
+		//t1 = temp;
+		//std::cout << "  " << t1.numerator_ << "   " << t1.denominator_ << std::endl;
+		//--temp;
+		common(t1);
+		*this = t1;
 		return temp;
 
 	};
@@ -209,10 +218,20 @@ int main()
 	std::cout << "\t f1 * f2\t" << (f3.get_numerator_()) << " / " << (f3.get_denominator_()) << std::endl;
 	f3 = f1 / f2;
 	std::cout << "\t f1 / f2\t" << (f3.get_numerator_()) << " / " << (f3.get_denominator_()) << std::endl;
-	++f1;
+	f3 = f1++;
+	//f1++;
 	std::cout << "\t f1++ \t" << (f1.get_numerator_()) << " / " << (f1.get_denominator_()) << std::endl;
+	std::cout << "\t f3 \t" << (f3.get_numerator_()) << " / " << (f3.get_denominator_()) << std::endl;
+	++f2;
+	//f1++;
+	std::cout << "\t ++f2 \t" << (f2.get_numerator_()) << " / " << (f2.get_denominator_()) << std::endl;
 	--f1;
-	std::cout << "\t f1-- \t" << (f1.get_numerator_()) << " / " << (f1.get_denominator_()) << std::endl;
+	//f1--;
+	std::cout << "\t --f1 \t" << (f1.get_numerator_()) << " / " << (f1.get_denominator_()) << std::endl;
+	f3 = f2--;
+	//f1++;
+	std::cout << "\t f2-- \t" << (f2.get_numerator_()) << " / " << (f2.get_denominator_()) << std::endl;
+	std::cout << "\t f3 \t" << (f3.get_numerator_()) << " / " << (f3.get_denominator_()) << std::endl;
 	-f1;
 	std::cout << "\t -f1 \t" << (f1.get_numerator_()) << " / " << (f1.get_denominator_()) << std::endl;
 	return 0;
