@@ -69,9 +69,9 @@ public:
 
 		t.numerator_ = (numerator_ * f.denominator_) + (f.numerator_ * denominator_);
 		t.denominator_ = f.denominator_ * denominator_ ;
-		t = common(t);
+		f = common(t);
 
-		return t;
+		return f;
 
 	};
 	Fraction operator - (Fraction f)
@@ -80,17 +80,17 @@ public:
 
 		t.numerator_ = (numerator_ * f.denominator_) - (f.numerator_ * denominator_);
 		t.denominator_ = f.denominator_ * denominator_;
-		t = common(t);
+		f = common(t);
 
-		return t;
+		return f;
 
 	};
 	Fraction operator * (Fraction f)
 	{
 		Fraction t(0, 0);
 
-		t.numerator_ = (f.denominator_ * denominator_);
-		t.denominator_ = (numerator_ * f.numerator_);
+		t.denominator_ = (f.denominator_ * denominator_);
+		t.numerator_ = (numerator_ * f.numerator_);
 		t = common(t);
 
 		return t;
@@ -107,48 +107,52 @@ public:
 		return t;
 
 	};
-	Fraction& operator ++ (int)
+	Fraction operator ++ (int)
 	{
 		Fraction t1(0, 0);
+		t1 = *this;
+	
+		numerator_ = (numerator_ + denominator_);
+		denominator_ = denominator_;
 		Fraction temp(numerator_, denominator_);
-
-		t1.numerator_ = (temp.numerator_ + temp.denominator_);
-		t1.denominator_ = temp.denominator_;
-		
-		common(t1);
-		*this = t1;
-		return temp;
+		temp = common(temp);
+		numerator_ = temp.numerator_;
+		denominator_ = temp.denominator_;
+			return t1;
 
 	};
-	Fraction& operator ++ ()
+	Fraction operator ++ ()
 	{
 		numerator_ = (numerator_ + denominator_);
 		denominator_ = denominator_;
-
-
-		Fraction temp = *this;
-		common(temp);
+		Fraction temp(numerator_, denominator_);
+		temp = common(temp);
+	//Fraction t = common(*this);
+	
 		return temp;
 
 	};
-	Fraction& operator -- (int)
+	Fraction operator -- (int)
 	{
-		 Fraction t1(0,0);
-		Fraction temp(numerator_, denominator_);
-		
+		 Fraction t1(0,0) ;
+		 t1 = *this;
+			
 		//std::cout << "  " << temp.numerator_ << "   " << temp.denominator_ << std::endl;
-		t1.numerator_ = (temp.numerator_ - temp.denominator_);
-		t1.denominator_ = temp.denominator_;
+		numerator_ = (numerator_ - denominator_);
+		denominator_ = denominator_;
+		Fraction temp(numerator_, denominator_);
+		temp = common(temp);
+		numerator_ = temp.numerator_;
+		denominator_ = temp.denominator_;
 		//std::cout << "  " << temp.numerator_ << "   " << temp.denominator_ << std::endl;
 		//t1 = temp;
 		//std::cout << "  " << t1.numerator_ << "   " << t1.denominator_ << std::endl;
 		//--temp;
-		common(t1);
-		*this = t1;
-		return temp;
+				
+		return t1;
 
 	};
-	Fraction& operator -- ()
+	Fraction operator -- ()
 	{
 		
 
@@ -157,18 +161,18 @@ public:
 		
 
 		Fraction temp = *this;
-		common(temp);
+		temp = common(temp);
 		return temp;
 
 	};
-	Fraction& operator - ()
+	Fraction operator - ()
 	{
 		
 
 		numerator_ = (-numerator_ );
 		denominator_ = denominator_;
 		Fraction temp = *this;
-		common(temp);
+		temp = common(temp);
 		return temp;
 
 	};
